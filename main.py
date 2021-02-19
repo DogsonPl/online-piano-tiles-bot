@@ -57,4 +57,4 @@ if __name__ == '__main__':
 
     record_screen()
 
-# bot dziala tylko na https://www.gry.pl/gra/magiczne-klawisze-pianina i przegladarka musi byc wlaczona w pelnym oknie
+# bot works only on https://www.agame.com/game/magic-piano-tiles
