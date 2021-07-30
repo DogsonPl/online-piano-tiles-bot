@@ -1,18 +1,27 @@
+import time
+import os
+
 from cv2 import cv2
 import numpy as np
 import pyautogui
-import time
-import os
 import pynput
 
 
 class UserInputListener:
     def start_listening(self):
+        """
+        listen keyboard input
+        """
         listener = pynput.keyboard.Listener(on_press=self.check_input)
         listener.start()
 
     @staticmethod
     def check_input(key):
+        """
+        Quit from program when user press ESC on keyboard
+
+        :param key: key from keyboard which was handled by pynput listener
+        """
         if key == pynput.keyboard.Key.esc:
             os._exit(0)
 
@@ -32,9 +41,9 @@ class GetInfoFromScreen:
             frame = pyautogui.screenshot(region=(LEFT, TOP, WIDTH, HEIGHT))
             frame = np.array(frame)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            self.get_image_data(frame)
+            self.process_image_data(frame)
 
-    def get_image_data(self, frame):
+    def process_image_data(self, frame):
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
         frame = cv2.inRange(frame, self.lower_color, self.upper_color)
         self.play_piano.play_piano(frame)
@@ -50,9 +59,7 @@ class PlayPiano:
 
     def play_piano(self, frame):
         matches = np.argwhere(frame == 255)
-        if len(matches) == 0:
-            pass
-        else:
+        if len(matches) != 0:
             place_to_click_x = matches[-1][-1]
             place_to_click_x += LEFT
             place_to_click_y = matches[-1][0]
@@ -70,7 +77,7 @@ def start():
     UserInputListener().start_listening()
     timer = 5
     print("Click ESC to close program")
-    for i in range(5):
+    for _ in range(5):
         print(f"Starting in {timer}", end="\r")
         timer -= 1
         time.sleep(1)
@@ -85,4 +92,5 @@ if __name__ == '__main__':
     HEIGHT = 400
     start()
 
-# bot works only on https://www.agame.com/game/magic-piano-tiles
+# bot works on this page: https://www.agame.com/game/magic-piano-tiles
+# required screen size: 1920x1080
