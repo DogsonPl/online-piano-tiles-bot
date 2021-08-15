@@ -69,7 +69,7 @@ class PlayPiano:
     def press_button(self, place_to_click_x, place_to_click_y):
         self.mouse.position = (place_to_click_x, place_to_click_y)
         self.mouse.press(button=pynput.mouse.Button.left)
-        time.sleep(0.09)
+        time.sleep(0.08)
         self.mouse.release(button=pynput.mouse.Button.left)
 
 
@@ -87,10 +87,10 @@ def start():
 
 if __name__ == '__main__':
     LEFT = 545
-    TOP = 200
+    TOP = 205
     WIDTH = 360
     HEIGHT = 400
     start()
 
-# bot works on this page: https://www.agame.com/game/magic-piano-tiles
+# bot works on this page: https://www.agame.com/game/magic-piano-tiles, tested on chrome
 # required screen size: 1920x1080
